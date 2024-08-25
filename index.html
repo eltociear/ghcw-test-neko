@@ -7,12 +7,22 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #000;
+            background-image: url('background.jpg');
+            background-size: cover;
             color: #fff;
             font-family: Arial, sans-serif;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
         }
         #tetris {
             display: grid;
@@ -25,14 +35,38 @@
             width: 30px;
             height: 30px;
             background-color: #444;
+            transition: background-color 0.3s;
         }
         .filled {
             background-color: #f00;
         }
+        .cell.filled {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Tetris Game</h1>
+        <p>Enjoy the classic Tetris game with a modern twist!</p>
+    </header>
     <div id="tetris"></div>
+    <footer>
+        <p>Share this game on social media!</p>
+        <button onclick="shareOnFacebook()">Facebook</button>
+        <button onclick="shareOnTwitter()">Twitter</button>
+    </footer>
     <script>
         const tetris = document.getElementById('tetris');
         const rows = 20;
@@ -126,6 +160,17 @@
                     break;
             }
         });
+
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Check out this awesome Tetris game!');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
 
         createBoard();
         generateRandomPiece();
